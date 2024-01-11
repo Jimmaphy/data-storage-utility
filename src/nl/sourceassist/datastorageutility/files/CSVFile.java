@@ -4,10 +4,14 @@ import nl.sourceassist.datastorageutility.datastructure.IdentifiableNode;
 import nl.sourceassist.datastorageutility.datastructure.RootNode;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.StructureViolationException;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class CSVFile implements File {
 
@@ -21,6 +25,14 @@ public class CSVFile implements File {
         this.delimiter = delimiter;
     }
 
+        /**
+     * Reads all data from the CSV file and returns it as a RootNode.
+     * Each line in the file is represented as an IdentifiableNode, with the first column as the identifier and the remaining columns as children.
+     * If the file has headings, the first line is skipped.
+     *
+     * @return a RootNode representing all data in the file
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     public RootNode readAllData() {
         RootNode dataStructure = new RootNode(2);
