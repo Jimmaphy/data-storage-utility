@@ -36,3 +36,4 @@ public interface File {
      */
     boolean saveFileAs(Paths path);
 }
+

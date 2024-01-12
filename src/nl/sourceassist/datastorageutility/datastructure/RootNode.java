@@ -166,13 +166,45 @@ public class RootNode {
     }
 
     /**
-     * Check whether a node with the provided key exists.
+     * Check whether a node with the provided key exists directly below the root.
      *
      * @param key the key of the node to search for
      * @return true if the node exists, false if not
      */
-    private boolean doesNodeExist(String key) {
-        return getChild(key) != null;
+    private boolean doesParentHaveChildWithKey(String key) {
+        ArrayList<IdentifiableNode> children = new ArrayList<>(this.children);
+        return hasChild(key, children);
+    }
+
+    /**
+     * Check whether a node with the provided key exists within the parent node.
+     *
+     * @param key the key of the node to search for
+     * @param parent the parent of the node.
+     * @return true if the node exists, false if not
+     */
+    private boolean doesParentHaveChildWithKey(String key, CompositeNode parent) {
+        ArrayList<IdentifiableNode> children = parent.getChildren();
+        return hasChild(key, children);
+    }
+
+    /**
+     * Check whether a child exists in a list of children.
+     * This function is meant to be used in combination with doesParentHaveChildWithKey.
+     *
+     * @param key the key of the child to look for
+     * @param children the list of children to search in
+     * @return true if the child exists, false otherwise
+     * @see RootNode#doesParentHaveChildWithKey
+     */
+    private static boolean hasChild(String key, ArrayList<IdentifiableNode> children) {
+        for (IdentifiableNode child : children) {
+            if (child.getKey().equals(key)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -192,7 +224,7 @@ public class RootNode {
             throw new NullPointerException();
         }
 
-        if (doesNodeExist(newChild.getKey())) {
+        if (doesParentHaveChildWithKey(newChild.getKey())) {
             throw new KeyAlreadyExistsException();
         }
 
@@ -224,12 +256,12 @@ public class RootNode {
             throw new NullPointerException();
         }
 
-        if (doesNodeExist(newChild.getKey())) {
-            throw new KeyAlreadyExistsException();
-        }
-
         if (!(parent instanceof CompositeNode)) {
             throw new StructureViolationException();
+        }
+
+        if (doesParentHaveChildWithKey(newChild.getKey(), (CompositeNode) parent)) {
+            throw new KeyAlreadyExistsException();
         }
 
         if (this.maxDepth < this.getNodeDepth(parentKey) + this.determineExtraDepth(newChild)) {

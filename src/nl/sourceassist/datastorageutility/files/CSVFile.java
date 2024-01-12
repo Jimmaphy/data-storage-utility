@@ -1,61 +1,60 @@
 package nl.sourceassist.datastorageutility.files;
 
+import nl.sourceassist.datastorageutility.datastructure.CompositeNode;
 import nl.sourceassist.datastorageutility.datastructure.IdentifiableNode;
+import nl.sourceassist.datastorageutility.datastructure.LeafNode;
 import nl.sourceassist.datastorageutility.datastructure.RootNode;
 
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.StructureViolationException;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.util.concurrent.StructureViolationException;
+import java.util.stream.IntStream;
 
 public class CSVFile implements File {
 
     private final char delimiter;
     private final boolean hasHeadings;
-    private Paths filePath;
+    private Path filePath;
 
-    public CSVFile(Paths filePath, boolean hasHeadings, char delimiter) {
-        this.filePath = filePath;
+    public CSVFile(String filePath, boolean hasHeadings, char delimiter) {
+        this.filePath = Paths.get(filePath);
         this.hasHeadings = hasHeadings;
         this.delimiter = delimiter;
     }
 
-        /**
-     * Reads all data from the CSV file and returns it as a RootNode.
-     * Each line in the file is represented as an IdentifiableNode, with the first column as the identifier and the remaining columns as children.
-     * If the file has headings, the first line is skipped.
-     *
-     * @return a RootNode representing all data in the file
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     public RootNode readAllData() {
         RootNode dataStructure = new RootNode(2);
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
-            String line;
-            // Skip the first line if it contains headings
-            if (hasHeadings) {
-                reader.readLine();
-            }
+            String[] headings = this.hasHeadings
+                ? reader.readLine().split(String.valueOf(delimiter))
+                : IntStream.rangeClosed(1, 10)
+                    .mapToObj(String::valueOf)
+                    .toArray(String[]::new);
 
-            while ((line = reader.readLine()) != null) {
+            String line = reader.readLine();
+            int rowNumber = 0;
+            while (line != null) {
                 String[] values = line.split(String.valueOf(delimiter));
 
-                IdentifiableNode node = new IdentifiableNode(values[0]); // Assuming the first column is an identifier
-
-                for (int i = 1; i < values.length; i++) {
-                    node.addChild(values[i]);
+                CompositeNode rowNode = new CompositeNode(String.valueOf(rowNumber)); // Assuming the first column is an identifier
+                for (int i = 0; i < values.length; i++) {
+                    rowNode.addChild(new LeafNode(headings[i], values[i]));
                 }
-                dataStructure.addChild(node);
+
+                dataStructure.addChild(rowNode);
+                line = reader.readLine();
+                rowNumber++;
             }
-        } catch (IOException e) {
-            e.printStackTrace(); // Handle or log the exception as needed
+        }
+
+        catch (IOException e) {
+            System.out.println(e.toString());
         }
 
         return dataStructure;
