@@ -14,13 +14,31 @@
 
 The `FileFactory` class and the `CSVFile` class are implementations of the Factory Method design pattern. The `FileFactory` class provides a static method `OpenFileFactory` that creates and returns an instance of a `File` subclass based on the file extension of the provided file path. The `CSVFile` class has a `readAllData` method that creates and returns a `RootNode` object based on the data read from a CSV file.
 
-### Method Overloading
-
-The `RootNode` class uses the Method Overloading pattern. It has two methods named `doesParentHaveChildWithKey`, but they take different parameters. One method takes a `String` key, and the other takes a `String` key and a `CompositeNode` parent.
-
 ### Composite
 
-The `CompositeNode` class is an implementation of the Composite design pattern. It represents a node in a tree structure that can have child nodes. The `doesParentHaveChildWithKey` methods are used to check if a node with a specific key exists in the tree.
+The `CompositeNode` class is an implementation of the Composite design pattern. It represents a node in a tree structure that can have child nodes. The `doesParentHaveChildWithKey` methods are used to check if a node with a specific key exists in the tree. This also incorperated the LeefNode and Rootnode
+
+![Composite Diagram](./diagrams/Composite%20Diagram.png)
+
+### Builder Pattern
+
+![Builder Diagram](./diagrams/Builder%20Diagram.png)
+
+### State Pattern
+
+![State Diagram](./diagrams/State%20Diagram.png)
+
+### Static Factory 
+
+![Static Factory Diagram](./diagrams/Static%20Factory%20Diagram.png)
+
+### Itterator 
+
+![Itterator Diagram](./diagrams/Itterator%20Diagram.png)
+
+### Decorator 
+
+To be implemented
 
  ## Development
 
