@@ -110,6 +110,10 @@ public class RootNode {
         return size;
     }
 
+    public ArrayList<IdentifiableNode> getChildren() {
+        return this.children;
+    }
+
     /**
      * Get a child from the data structure.
      *

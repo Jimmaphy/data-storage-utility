@@ -35,5 +35,12 @@ public interface File {
      * @see Paths Java's cross.
      */
     boolean saveFileAs(Paths path);
+
+    /**
+     * Get the name of the file without extension.
+     *
+     * @return the name of the file without extension
+     */
+    String getFileName();
 }
 
