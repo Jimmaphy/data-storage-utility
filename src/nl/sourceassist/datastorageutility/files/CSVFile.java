@@ -1,12 +1,10 @@
 package nl.sourceassist.datastorageutility.files;
 
 import nl.sourceassist.datastorageutility.datastructure.CompositeNode;
-import nl.sourceassist.datastorageutility.datastructure.IdentifiableNode;
 import nl.sourceassist.datastorageutility.datastructure.LeafNode;
 import nl.sourceassist.datastorageutility.datastructure.RootNode;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -42,7 +40,7 @@ public class CSVFile implements File {
             while (line != null) {
                 String[] values = line.split(String.valueOf(delimiter));
 
-                CompositeNode rowNode = new CompositeNode(String.valueOf(rowNumber)); // Assuming the first column is an identifier
+                CompositeNode rowNode = new CompositeNode(String.valueOf(rowNumber));
                 for (int i = 0; i < values.length; i++) {
                     rowNode.addChild(new LeafNode(headings[i], values[i]));
                 }
@@ -72,5 +70,10 @@ public class CSVFile implements File {
     @Override
     public boolean saveFileAs(Paths newFilePath) {
         return false;
+    }
+
+    @Override
+    public String getFileName() {
+        return this.filePath.getFileName().toString();
     }
 }
