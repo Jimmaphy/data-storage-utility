@@ -5,6 +5,10 @@ import nl.sourceassist.datastorageutility.datastructure.IdentifiableNode;
 import nl.sourceassist.datastorageutility.datastructure.RootNode;
 import nl.sourceassist.datastorageutility.files.File;
 import nl.sourceassist.datastorageutility.files.FileFactory;
+import nl.sourceassist.datastorageutility.parser.DataStringReplacer;
+import nl.sourceassist.datastorageutility.parser.KeyStringReplacer;
+import nl.sourceassist.datastorageutility.parser.NodeParser;
+import nl.sourceassist.datastorageutility.parser.Parser;
 import nl.sourceassist.datastorageutility.state.State;
 
 import java.io.IOException;
@@ -21,12 +25,14 @@ public class Commander {
     private Properties properties;
     private Console console;
     private ArrayList<File> files;
+    private Parser parser;
 
     public Commander() throws IOException {
         this.state = State.STARTING;
         this.properties = new Properties();
         this.console = new Console();
         this.files = new ArrayList<>();
+        this.parser = new NodeParser();
 
         this.properties.load(getClass().getResourceAsStream("/strings.properties"));
     }
@@ -120,7 +126,23 @@ public class Commander {
     }
 
     private boolean executeDefining() {
-        return true;
+        console.writeCommand(properties.getProperty("nextParser"));
+        console.writeCommand(properties.getProperty("listParsers"));
+        String[] input = console.readLine().split(String.valueOf(' '));
+
+        if (input.length == 3) {
+            this.parser = switch (input[0].toLowerCase()) {
+                case "keystringreplacer" -> new KeyStringReplacer(this.parser, input[1], input[2]);
+                case "datastringreplacer" -> new DataStringReplacer(this.parser, input[1], input[2]);
+                default -> this.parser;
+            };
+        }
+
+        else if (!input[0].isEmpty()) {
+            console.writeInstruction(properties.getProperty("invalidParserArgument"));
+        }
+
+        return input[0].isEmpty();
     }
 
     private boolean executeMerging() {
@@ -130,7 +152,7 @@ public class Commander {
             CompositeNode fileNode = new CompositeNode(file.getFileName());
 
             for (IdentifiableNode node : file.readAllData().getChildren()) {
-                fileNode.addChild(node);
+                fileNode.addChild(this.parser.process(node));
             }
 
             rootNode.addChild(fileNode);
