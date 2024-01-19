@@ -123,10 +123,3 @@ This approach was picked to allow different parser implementation to focus on ho
 without having to copy the base code for every single class.
 The `NodeParser` class is used as the root of the decorator and implements an identity function,
 this ends the loop of decorators.
-
-## Development
-
-This project was developed through pair programming by Wesley and Dimitrie, with Wesley handling the programming work.
-Pair programming is a technique in which two programmers work together at one workstation. One, the driver, writes code
-while the other, the observer or navigator, reviews each line of code as it is typed in. The two programmers switch
-roles frequently.
