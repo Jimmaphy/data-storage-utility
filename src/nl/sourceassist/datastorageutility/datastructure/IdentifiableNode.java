@@ -24,4 +24,12 @@ public interface IdentifiableNode {
      * @return the data associated with the component as a string
      */
     String getData();
+
+    /**
+     * Set the key of the node to a new value.
+     * CAREFUL, using this functions means the application isn't checking for duplicate keys anymore.
+     *
+     * @param newKey the new key of the node.
+     */
+    void setKey(String newKey);
 }

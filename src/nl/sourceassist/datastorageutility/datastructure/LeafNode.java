@@ -12,7 +12,7 @@ public class LeafNode implements IdentifiableNode {
      * The value of the key variable is set in the constructor of the LeafNode class,
      * and is not intended to be modified after its construction.
      */
-    private final String key;
+    private String key;
 
     /**
      * The data variable the data associated with the leaf node in a data structure.
@@ -20,7 +20,7 @@ public class LeafNode implements IdentifiableNode {
      * The value of the data variable is set in the constructor of the LeafNode class.
      * and is not intended to be modified after its construction.
      */
-    private final String data;
+    private String data;
 
     /**
      * Constructs a new LeafNode object with the given key and data.
@@ -41,5 +41,19 @@ public class LeafNode implements IdentifiableNode {
     /** {@inheritDoc} */
     public String getData() {
         return this.data;
+    }
+
+    /** {@inheritDoc} */
+    public void setKey(String newKey) {
+        this.key = newKey;
+    }
+
+    /**
+     * Set the data of the node to a new value.
+     *
+     * @param newData the new key of the node.
+     */
+    public void setData(String newData) {
+        this.data = newData;
     }
 }

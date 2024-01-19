@@ -14,7 +14,7 @@ public class CompositeNode implements IdentifiableNode {
      * The value of the key variable is set in the constructor of the LeafNode class,
      * and is not intended to be modified after its construction.
      */
-    private final String key;
+    private String key;
 
     /**
      * children is an ArrayList of IdentifiableNode objects.
@@ -38,6 +38,11 @@ public class CompositeNode implements IdentifiableNode {
     /** {@inheritDoc} */
     public String getKey() {
         return this.key;
+    }
+
+    /** {@inheritDoc} */
+    public void setKey(String newKey) {
+        this.key = newKey;
     }
 
     /**
