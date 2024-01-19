@@ -28,7 +28,7 @@ The application uses (1) `Static Factory Method` to determine the type of file o
 (5) `Iterator` to loop over all the nodes of the composite structure &
 (6) `Decorator` to dynamically adjust the processing of data before merging.
 
-### Static Factory Method
+### Static Factory Method - Dimitrie
 
 ![Composite Diagram](./diagrams/Static%20Factory%20Diagram.png)
 
@@ -52,7 +52,7 @@ return switch (extension) {
 };
 ```
 
-### Composite
+### Composite - Wesley
 
 ![Composite Diagram](./diagrams/Composite%20Diagram.png)
 
@@ -61,7 +61,7 @@ An `IdentifiableNode` represents a node in the tree.
 This is then specified using a `CompositeNode`, representing a node that contains more nodes;
 or a `LeafNode` which represents a data point.
 
-### Builder
+### Builder - Wesley
 
 ![Builder Diagram](./diagrams/Builder%20Diagram.png)
 
@@ -72,7 +72,7 @@ Two versions of this method exist: one to add a child to the root of the tree, a
 This is done through method overloading as seen in the diagram above.
 The `RootNode` class, next to being a builder, manages the tree.
 
-### State
+### State - Wesley
 
 ![State Diagram](./diagrams/State%20Diagram.png)
 
@@ -102,7 +102,7 @@ public boolean execute() {
 }
 ```
 
-### Iterator
+### Iterator - Dimitrie 
 
 ![Iterator Diagram](./diagrams/Itterator%20Diagram.png)
 
@@ -110,7 +110,7 @@ The `RootNode` handles the iteration of the data structure.
 As a manager, this class has the governance over the entire structure.
 This way, navigating the tree becomes more simplistic.
 
-### Decorator
+### Decorator - Dimitrie
 
 ![Decorator Diagram](./diagrams/Decorator%20Diagram.png)
 
@@ -123,3 +123,9 @@ This approach was picked to allow different parser implementation to focus on ho
 without having to copy the base code for every single class.
 The `NodeParser` class is used as the root of the decorator and implements an identity function,
 this ends the loop of decorators.
+
+###  Pair Programming
+
+We used pair programming to design an application with design patterns. This collaborative effort,
+led to the seamless integration of creational, structural, and behavioral design patterns. 
+The result was an application that not only met functional requirements but also showcased the power of collaborative creativity in the intersection of pair programming and design patterns.
