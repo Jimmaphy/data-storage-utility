@@ -1,6 +1,5 @@
 package nl.sourceassist.datastorageutility.files;
 
-
 import nl.sourceassist.datastorageutility.datastructure.CompositeNode;
 import nl.sourceassist.datastorageutility.datastructure.LeafNode;
 import nl.sourceassist.datastorageutility.datastructure.RootNode;
@@ -21,8 +20,6 @@ public class JSONFile implements File {
 
     public JSONFile(String filePath) {
         this.filePath = Path.of(filePath);
-
-
     }
 
     @Override
